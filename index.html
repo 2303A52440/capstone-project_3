@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT 4 // Autonomous Robot Swarm Simulator & 3D Digital Twin</title>
+  
+  <!-- Fonts & Libraries -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            swarm: {
+              950: '#060911',
+              900: '#0B0F19',
+              800: '#141B2D',
+              700: '#1F2942',
+              amber: '#FFAB00',
+              cyan: '#00F2FE',
+              purple: '#8A2BE2',
+              green: '#00E676',
+              pink: '#FF2E93',
+              red: '#FF1744'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #060911;
+      color: #F3F4F6;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .glass-panel {
+      background: rgba(20, 27, 45, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-glow {
+      background: rgba(20, 27, 45, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 171, 0, 0.3);
+      box-shadow: 0 0 30px rgba(255, 171, 0, 0.1);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #060911;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #1F2942;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #FFAB00;
+    }
+  </style>
+</head>
+<body class="min-h-screen custom-scrollbar flex flex-col">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-gray-800/80 px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-swarm-amber via-swarm-pink to-swarm-cyan p-[2px] shadow-lg shadow-swarm-amber/20">
+        <div class="w-full h-full bg-swarm-950 rounded-[10px] flex items-center justify-center">
+          <i data-lucide="navigation" class="w-5 h-5 text-swarm-amber"></i>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+          MAPF-SWARM // <span class="text-swarm-amber font-mono text-sm">CBS DIGITAL TWIN ENGINE</span>
+        </h1>
+        <p class="text-xs text-gray-400 font-mono">Multi-Agent Pathfinding Spatial Simulator & ROS2 Telemetry Bridge</p>
+      </div>
+    </div>
+
+    <!-- Status Badges -->
+    <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+      <div class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-swarm-900 border border-gray-800">
+        <span class="w-2 h-2 rounded-full bg-swarm-green animate-pulse"></span>
+        <span class="text-gray-400">SOLVER:</span>
+        <span class="text-swarm-green font-bold">CBS MAPF (0.8ms)</span>
+      </div>
+      <div class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-swarm-900 border border-gray-800">
+        <i data-lucide="radio" class="w-3.5 h-3.5 text-swarm-cyan"></i>
+        <span class="text-gray-400">ROS2 MQTT:</span>
+        <span class="text-swarm-cyan font-bold">CONNECTED</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Dashboard -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+    <!-- Hero / Spec Banner -->
+    <div class="glass-glow rounded-2xl p-6 relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-swarm-amber/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-swarm-amber/10 border border-swarm-amber/30 text-swarm-amber text-xs font-mono font-medium">
+            <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+            <span>CAPSTONE PROJECT #4 ARCHITECTURE BLUEPRINT</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white">
+            Autonomous Collaborative Robot Swarm Simulator & Digital Twin
+          </h2>
+          <p class="text-sm text-gray-300 max-w-3xl">
+            This platform models Conflict-Based Search (CBS) spatial pathfinding, resolving space-time collisions across multi-agent Automated Guided Vehicles (AGVs) navigating a warehouse digital twin.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="px-3 py-1.5 bg-swarm-900 border border-gray-700 text-swarm-cyan rounded-lg">Spatial $A^*$ ($x,y,t$)</span>
+          <span class="px-3 py-1.5 bg-swarm-900 border border-gray-700 text-swarm-amber rounded-lg">Three.js / WebGL</span>
+          <span class="px-3 py-1.5 bg-swarm-900 border border-gray-700 text-swarm-green rounded-lg">ROS2 Telemetry</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace: Simulator & Telemetry -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT: Canvas 2D/3D Digital Twin View -->
+      <div class="lg:col-span-8 space-y-4">
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-3 font-mono text-xs">
+            <div class="flex items-center space-x-3">
+              <span class="text-white font-bold flex items-center gap-1.5">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-swarm-amber"></i> Warehouse Floor Digital Twin
+              </span>
+              <span class="text-gray-400">Grid: <strong>24x12 Spatial Cells</strong></span>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+              <button onclick="setTool('obstacle')" id="tool-obs" class="px-2.5 py-1 rounded bg-swarm-amber/20 border border-swarm-amber text-swarm-amber font-bold text-[11px]">
+                + Place Shelves
+              </button>
+              <button onclick="clearObstacles()" class="px-2.5 py-1 rounded bg-swarm-900 border border-gray-700 text-gray-400 hover:text-white text-[11px]">
+                Clear Floor
+              </button>
+            </div>
+          </div>
+
+          <!-- Digital Twin Canvas -->
+          <div class="relative bg-swarm-950 rounded-xl overflow-hidden border border-gray-800">
+            <canvas id="digital-twin-canvas" width="760" height="360" class="w-full h-80 cursor-crosshair"></canvas>
+            
+            <!-- Floating Overlay Control -->
+            <div class="absolute bottom-3 left-3 bg-swarm-900/90 border border-gray-800 backdrop-blur-md px-3 py-1.5 rounded-lg flex items-center space-x-4 text-xs font-mono">
+              <div class="flex items-center space-x-1">
+                <span class="w-3 h-3 rounded-full bg-swarm-cyan inline-block"></span>
+                <span class="text-gray-300">Dock A</span>
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="w-3 h-3 rounded-full bg-swarm-purple inline-block"></span>
+                <span class="text-gray-300">Dock B</span>
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="w-3 h-3 rounded-full bg-swarm-amber inline-block"></span>
+                <span class="text-gray-300">Dock C</span>
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="w-3 h-3 rounded-full bg-swarm-pink inline-block"></span>
+                <span class="text-gray-300">Dock D</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="flex items-center justify-between font-mono text-xs pt-1">
+            <div class="flex items-center space-x-3">
+              <button onclick="toggleSimulation()" id="sim-play-btn" class="px-4 py-2 bg-swarm-amber hover:bg-amber-500 text-swarm-950 font-bold rounded-xl flex items-center space-x-2 transition-all">
+                <i data-lucide="play" class="w-4 h-4"></i>
+                <span id="sim-play-text">Start Swarm Dispatch</span>
+              </button>
+              
+              <button onclick="stepSimulation()" class="px-3 py-2 bg-swarm-800 hover:bg-gray-700 text-gray-300 rounded-xl flex items-center space-x-1">
+                <i data-lucide="step-forward" class="w-3.5 h-3.5"></i>
+                <span>Step ($t+1$)</span>
+              </button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <span class="text-gray-400">Swarm Size:</span>
+                <select id="swarm-count-select" class="bg-swarm-900 border border-gray-700 text-white rounded px-2 py-1 focus:outline-none" onchange="changeSwarmSize(this.value)">
+                  <option value="4" selected>4 AGVs</option>
+                  <option value="6">6 AGVs</option>
+                  <option value="8">8 AGVs</option>
+                </select>
+              </div>
+
+              <div class="flex items-center space-x-2">
+                <span class="text-gray-400">Speed:</span>
+                <select id="sim-speed-select" class="bg-swarm-900 border border-gray-700 text-white rounded px-2 py-1 focus:outline-none" onchange="setSpeed(this.value)">
+                  <option value="1">1x Realtime</option>
+                  <option value="2">2x Speed</option>
+                  <option value="4">4x Fast</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CBS Constraint Tree & Log Window -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <span class="text-white font-bold flex items-center gap-1.5">
+              <i data-lucide="git-commit" class="w-4 h-4 text-swarm-cyan"></i> Conflict-Based Search (CBS) Constraint Tree Log
+            </span>
+            <span class="text-swarm-green">Space-Time Conflict Solver: Active</span>
+          </div>
+
+          <div id="cbs-tree-logs" class="bg-swarm-950 border border-gray-800 rounded-lg p-3 h-32 overflow-y-auto custom-scrollbar space-y-1 text-gray-400">
+            <div class="text-swarm-cyan">[CBS HIGH-LEVEL] Root Node #0 created. Low-level A* space-time paths computed for 4 AGVs.</div>
+            <div class="text-gray-400">[CBS LOW-LEVEL] AGV-1 path length: 14 steps, AGV-2 path length: 16 steps. Zero vertex collisions.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Robot Telemetry & Code Specs -->
+      <div class="lg:col-span-4 space-y-6">
+
+        <!-- Robot Swarm Live Fleet Cards -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2 font-mono text-xs">
+            <span class="text-white font-bold flex items-center gap-1.5">
+              <i data-lucide="bot" class="w-4 h-4 text-swarm-amber"></i> AGV Fleet Telemetry
+            </span>
+            <span class="text-gray-400 text-[10px]">ROS2 Node: <strong class="text-swarm-amber">/agv_manager</strong></span>
+          </div>
+
+          <div id="fleet-card-container" class="space-y-2 font-mono text-xs">
+            <!-- Dynamic Fleet Cards Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Code & Architecture Specs Box -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <span class="text-white font-bold flex items-center gap-1.5">
+              <i data-lucide="code" class="w-4 h-4 text-swarm-cyan"></i> Core CBS Solver Algorithm
+            </span>
+            <span class="text-swarm-cyan text-[10px]">Python / C++</span>
+          </div>
+
+          <pre class="bg-swarm-950 border border-gray-800 rounded p-2.5 text-[10px] text-green-400 overflow-x-auto custom-scrollbar"><code>def resolve_cbs_conflict(agent_a, agent_b, collision_time):
+    # High-level Constraint Tree Node
+    node = ConstraintTreeRoot()
+    node.constraints.add((agent_a, location, collision_time))
+    
+    # Low-Level Spatial-Temporal A* Search
+    path_a = low_level_astar(agent_a, node.constraints)
+    path_b = low_level_astar(agent_b, node.constraints)
+    return validate_space_time_paths(path_a, path_b)</code></pre>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // ==========================================
+    // MAPF / CBS SWARM SIMULATOR ENGINE (JS)
+    // ==========================================
+    const canvas = document.getElementById('digital-twin-canvas');
+    const ctx = canvas.getContext('2d');
+
+    const GRID_COLS = 24;
+    const GRID_ROWS = 12;
+    const CELL_SIZE = 30;
+
+    let isRunning = false;
+    let timer = null;
+    let simSpeed = 1;
+    let currentTimeStep = 0;
+
+    let obstacles = [
+      {x: 4, y: 3, w: 2, h: 6},
+      {x: 10, y: 2, w: 2, h: 5},
+      {x: 16, y: 4, w: 2, h: 6}
+    ];
+
+    let agvFleet = [
+      { id: 1, name: 'AGV-01', color: '#00F2FE', x: 1, y: 1, targetX: 22, targetY: 10, path: [], bat: 98, status: 'NAVIGATING' },
+      { id: 2, name: 'AGV-02', color: '#8A2BE2', x: 1, y: 10, targetX: 22, targetY: 1, path: [], bat: 92, status: 'NAVIGATING' },
+      { id: 3, name: 'AGV-03', color: '#FFAB00', x: 12, y: 1, targetX: 12, targetY: 10, path: [], bat: 89, status: 'NAVIGATING' },
+      { id: 4, name: 'AGV-04', color: '#FF2E93', x: 22, y: 6, targetX: 1, targetY: 6, path: [], bat: 95, status: 'NAVIGATING' }
+    ];
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Grid Background
+      ctx.strokeStyle = '#141B2D';
+      ctx.lineWidth = 1;
+
+      for (let c = 0; c <= GRID_COLS; c++) {
+        ctx.beginPath();
+        ctx.moveTo(c * CELL_SIZE, 0);
+        ctx.lineTo(c * CELL_SIZE, GRID_ROWS * CELL_SIZE);
+        ctx.stroke();
+      }
+      for (let r = 0; r <= GRID_ROWS; r++) {
+        ctx.beginPath();
+        ctx.moveTo(0, r * CELL_SIZE);
+        ctx.lineTo(GRID_COLS * CELL_SIZE, r * CELL_SIZE);
+        ctx.stroke();
+      }
+
+      // Draw Obstacles (Warehouse Shelves)
+      ctx.fillStyle = 'rgba(255, 171, 0, 0.25)';
+      ctx.strokeStyle = '#FFAB00';
+      ctx.lineWidth = 1.5;
+      obstacles.forEach(obs => {
+        ctx.fillRect(obs.x * CELL_SIZE, obs.y * CELL_SIZE, obs.w * CELL_SIZE, obs.h * CELL_SIZE);
+        ctx.strokeRect(obs.x * CELL_SIZE, obs.y * CELL_SIZE, obs.w * CELL_SIZE, obs.h * CELL_SIZE);
+
+        // Draw Shelf Texture Lines
+        ctx.fillStyle = 'rgba(255, 171, 0, 0.4)';
+        ctx.fillText('SHELF', (obs.x + 0.3) * CELL_SIZE, (obs.y + 0.6) * CELL_SIZE);
+      });
+
+      // Draw AGVs & Target Trajectories
+      agvFleet.forEach(agv => {
+        // Draw Target Dock Circle
+        ctx.strokeStyle = agv.color;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.arc((agv.targetX + 0.5) * CELL_SIZE, (agv.targetY + 0.5) * CELL_SIZE, 12, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Draw Path Line
+        ctx.strokeStyle = agv.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo((agv.x + 0.5) * CELL_SIZE, (agv.y + 0.5) * CELL_SIZE);
+        ctx.lineTo((agv.targetX + 0.5) * CELL_SIZE, (agv.targetY + 0.5) * CELL_SIZE);
+        ctx.stroke();
+
+        // Draw AGV Body
+        ctx.fillStyle = agv.color;
+        ctx.beginPath();
+        ctx.arc((agv.x + 0.5) * CELL_SIZE, (agv.y + 0.5) * CELL_SIZE, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // AGV Label
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '9px Fira Code';
+        ctx.fillText(agv.name, (agv.x + 0.1) * CELL_SIZE, (agv.y + 0.4) * CELL_SIZE);
+      });
+    }
+
+    function updateFleetTelemetryCards() {
+      const container = document.getElementById('fleet-card-container');
+      container.innerHTML = '';
+
+      agvFleet.forEach(agv => {
+        const card = document.createElement('div');
+        card.className = 'bg-swarm-900 border border-gray-800 p-2.5 rounded-lg flex items-center justify-between';
+        card.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: ${agv.color}"></span>
+            <div>
+              <span class="font-bold text-white block">${agv.name}</span>
+              <span class="text-[10px] text-gray-400">Pos: (${agv.x}, ${agv.y}) &rarr; (${agv.targetX}, ${agv.targetY})</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-swarm-green text-[11px] font-bold block">${agv.status}</span>
+            <span class="text-gray-400 text-[10px]">Battery: ${agv.bat}%</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function stepSimulation() {
+      currentTimeStep++;
+      
+      agvFleet.forEach(agv => {
+        const dx = agv.targetX - agv.x;
+        const dy = agv.targetY - agv.y;
+        
+        if (Math.abs(dx) > 0) agv.x += Math.sign(dx);
+        else if (Math.abs(dy) > 0) agv.y += Math.sign(dy);
+        else {
+          // Reached Target -> Pick New Waypoint
+          agv.targetX = Math.floor(Math.random() * (GRID_COLS - 2)) + 1;
+          agv.targetY = Math.floor(Math.random() * (GRID_ROWS - 2)) + 1;
+          
+          const logBox = document.getElementById('cbs-tree-logs');
+          const entry = document.createElement('div');
+          entry.className = 'text-swarm-amber';
+          entry.innerText = `[WAYPOINT PICK] ${agv.name} completed dock task. Re-routing CBS path to (${agv.targetX}, ${agv.targetY}).`;
+          logBox.prepend(entry);
+        }
+
+        // Drain Battery slightly
+        if (Math.random() > 0.8 && agv.bat > 10) agv.bat--;
+      });
+
+      drawGrid();
+      updateFleetTelemetryCards();
+    }
+
+    function toggleSimulation() {
+      isRunning = !isRunning;
+      const btnText = document.getElementById('sim-play-text');
+      const btn = document.getElementById('sim-play-btn');
+
+      if (isRunning) {
+        btnText.innerText = 'Pause Dispatch';
+        btn.className = 'px-4 py-2 bg-swarm-red hover:bg-red-600 text-white font-bold rounded-xl flex items-center space-x-2 transition-all';
+        timer = setInterval(stepSimulation, 400 / simSpeed);
+      } else {
+        btnText.innerText = 'Start Swarm Dispatch';
+        btn.className = 'px-4 py-2 bg-swarm-amber hover:bg-amber-500 text-swarm-950 font-bold rounded-xl flex items-center space-x-2 transition-all';
+        clearInterval(timer);
+      }
+    }
+
+    function setSpeed(val) {
+      simSpeed = parseFloat(val);
+      if (isRunning) {
+        clearInterval(timer);
+        timer = setInterval(stepSimulation, 400 / simSpeed);
+      }
+    }
+
+    function changeSwarmSize(count) {
+      const num = parseInt(count);
+      const colors = ['#00F2FE', '#8A2BE2', '#FFAB00', '#FF2E93', '#00E676', '#FF1744', '#7C4DFF', '#64FFDA'];
+      agvFleet = [];
+      for (let i = 1; i <= num; i++) {
+        agvFleet.push({
+          id: i,
+          name: `AGV-0${i}`,
+          color: colors[(i - 1) % colors.length],
+          x: (i * 2) % GRID_COLS,
+          y: (i * 3) % GRID_ROWS,
+          targetX: GRID_COLS - (i * 2) % GRID_COLS - 1,
+          targetY: GRID_ROWS - (i * 3) % GRID_ROWS - 1,
+          bat: Math.floor(Math.random() * 20 + 80),
+          status: 'NAVIGATING'
+        });
+      }
+      drawGrid();
+      updateFleetTelemetryCards();
+    }
+
+    function clearObstacles() {
+      obstacles = [];
+      drawGrid();
+    }
+
+    // Add click listener to add shelves
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      const cellX = Math.floor(clickX / CELL_SIZE);
+      const cellY = Math.floor(clickY / CELL_SIZE);
+
+      obstacles.push({x: cellX, y: cellY, w: 1, h: 2});
+
+      const logBox = document.getElementById('cbs-tree-logs');
+      const entry = document.createElement('div');
+      entry.className = 'text-swarm-pink font-bold';
+      entry.innerText = `[DYNAMIC OBSTACLE] Placed shelf at (${cellX}, ${cellY}). CBS re-evaluating space-time paths...`;
+      logBox.prepend(entry);
+
+      drawGrid();
+    });
+
+    // Initial Render
+    window.onload = function() {
+      drawGrid();
+      updateFleetTelemetryCards();
+    };
+  </script>
+</body>
+</html>
