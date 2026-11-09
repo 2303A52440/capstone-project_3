@@ -37,9 +37,10 @@ VERIFIED WORKING ARTIFACT LINKS & PUBLIC REPOSITORY
    https://github.com/2303A52440/capstone-project_3/blob/main/2303A52440-Seetharam%20Poster.png
    (High-resolution 300 DPI poster with SRU emblem, architecture, and benchmark charts)
 
-6. SOCIAL MEDIA ANNOUNCEMENTS (LINKEDIN & TWITTER / X):
-   https://github.com/2303A52440/capstone-project_3/blob/main/SOCIAL_POSTS.md
-   (Features formal tags to @SRUniversity and @CsaiSru handles with popular robotics hashtags)
+6. AUTHOR LINKEDIN PROFILE & SOCIAL POST:
+   https://www.linkedin.com/in/seetharam-ravula-422499381
+   Post Details & Handles: https://github.com/2303A52440/capstone-project_3/blob/main/SOCIAL_POSTS.md
+   (Tagged to @SRUniversity and @CsaiSru handles with #MAPF #Robotics)
 
 7. VIDEO DEMONSTRATION WALKTHROUGH & SCRIPT (8 MINUTES):
    https://github.com/2303A52440/capstone-project_3/blob/main/VIDEO_DEMO_SCRIPT.md

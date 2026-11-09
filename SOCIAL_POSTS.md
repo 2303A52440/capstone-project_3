@@ -4,6 +4,7 @@
 
 ## 1. LinkedIn Post (Professional Long-Form)
 
+**Author Profile**: https://www.linkedin.com/in/seetharam-ravula-422499381  
 **Target Platform**: LinkedIn  
 **Status**: Ready to Publish  
 **Mentions / Tags**: @SR University, @School of Computer Science and Artificial Intelligence, @Dr. Sudha Rani, @Dr. CH. Sandeep, @Dr. M. Sheshikala, @Mr. Sallauddin Md  

@@ -1351,7 +1351,8 @@ def create_full_report():
         ("Technical Blog Post", "https://github.com/2303A52440/capstone-project_3/blob/main/BLOG.md", "Original technical article (650 words) detailing CBS mechanics, Space-Time A* search, and AGV warehouse coordination."),
         ("Project Presentation (PPT)", "https://github.com/2303A52440/capstone-project_3/blob/main/2303A52440-Seetharam%20PPT.pptx", "16-slide professional slide deck covering Problem, CBS Architecture, Mathematical Formulations, Benchmarks, and Demo."),
         ("Academic Research Poster", "https://github.com/2303A52440/capstone-project_3/blob/main/2303A52440-Seetharam%20Poster.png", "A1-size high-resolution conference poster with SRU emblem, architecture diagrams, DFD, and benchmark charts."),
-        ("Social Media Announcements", "https://github.com/2303A52440/capstone-project_3/blob/main/SOCIAL_POSTS.md", "Professional project announcement tagging @SRUniversity and School of CS&AI faculty handles with #MAPF #Robotics."),
+        ("LinkedIn Profile & Post", "https://www.linkedin.com/in/seetharam-ravula-422499381", "Author LinkedIn profile & project announcement tagging @SRUniversity and School of CS&AI faculty handles."),
+        ("Social Media Announcements", "https://github.com/2303A52440/capstone-project_3/blob/main/SOCIAL_POSTS.md", "Complete LinkedIn & Twitter/X post copy with hashtags and university handles."),
         ("Video Demonstration Script", "https://github.com/2303A52440/capstone-project_3/blob/main/VIDEO_DEMO_SCRIPT.md", "8-minute comprehensive video script featuring student technical explanations (25% face-cam) and live simulator demonstrations.")
     ]
     
