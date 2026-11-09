@@ -1,0 +1,57 @@
+================================================================================
+SR UNIVERSITY - SCHOOL OF COMPUTER SCIENCE & ARTIFICIAL INTELLIGENCE
+CAPSTONE PROJECT EVALUATION ARTIFACTS & LINKS FILE
+================================================================================
+
+PROJECT TITLE: Autonomous Collaborative Robot Swarm Simulator & Digital Twin (MAPF / CBS)
+ACADEMIC YEAR: 2026 - 2027
+INTERNAL GUIDE: Dr. Sudha Rani, Assistant Professor, School of CS&AI
+PROJECT COORDINATOR: Mr. Sallauddin Md, Assistant Professor, School of CS&AI (md.sallauddin@sru.edu.in)
+
+STUDENT DETAILS:
+1. Seetharam  (Enrollment No: 2303A52440)
+2. Sanjay     (Enrollment No: 2303A52337)
+3. Sathwik    (Enrollment No: 2303A52158)
+
+================================================================================
+VERIFIED WORKING ARTIFACT LINKS & PUBLIC REPOSITORY
+================================================================================
+
+1. SOURCE CODE REPOSITORY (PUBLIC GITHUB):
+   https://github.com/2303A52440/capstone-project_3
+   (Includes robot_swarm_cbs.py, index.html, figures, setup guides, and solver benchmarks)
+
+2. WEB DIGITAL TWIN PLATFORM (LIVE BROWSER SIMULATION):
+   https://htmlpreview.github.io/?https://github.com/2303A52440/capstone-project_3/blob/main/index.html
+   (Direct live execution of the HTML5 Canvas & TailwindCSS Digital Twin)
+
+3. TECHNICAL BLOG POST (400-800 WORDS, ORIGINAL & PLAGIARISM-FREE):
+   https://github.com/2303A52440/capstone-project_3/blob/main/BLOG.md
+   (Also ready to publish on Medium / Hashnode / Dev.to)
+
+4. PROJECT PRESENTATION PPT (16 SLIDES):
+   https://github.com/2303A52440/capstone-project_3/blob/main/2303A52440-Seetharam%20PPT.pptx
+   (Full slide deck conforming to presentation rubric, mentor and team slides)
+
+5. ACADEMIC RESEARCH POSTER (A1 CONFERENCE FORMAT):
+   https://github.com/2303A52440/capstone-project_3/blob/main/2303A52440-Seetharam%20Poster.png
+   (High-resolution 300 DPI poster with SRU emblem, architecture, and benchmark charts)
+
+6. SOCIAL MEDIA ANNOUNCEMENTS (LINKEDIN & TWITTER / X):
+   https://github.com/2303A52440/capstone-project_3/blob/main/SOCIAL_POSTS.md
+   (Features formal tags to @SRUniversity and @CsaiSru handles with popular robotics hashtags)
+
+7. VIDEO DEMONSTRATION WALKTHROUGH & SCRIPT (8 MINUTES):
+   https://github.com/2303A52440/capstone-project_3/blob/main/VIDEO_DEMO_SCRIPT.md
+   (Includes step-by-step video script, presenter face-cam guidelines, and demo walkthrough)
+
+================================================================================
+SUBMISSION ATTACHMENTS FOR EMAIL (TO: md.sallauddin@sru.edu.in)
+================================================================================
+As per guidelines, attach the following 5 individual files (NOT as zip/rar):
+1. 2303A52440-Seetharam Final Report.docx
+2. 2303A52440-Seetharam PPT.pptx
+3. 2303A52440-Seetharam Poster.png
+4. LINKS.txt
+5. Company Offer and Completion Certificate / College Certificate
+================================================================================
