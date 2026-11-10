@@ -1,111 +1,92 @@
-# 🤖 Autonomous Collaborative Robot Swarm Simulator & Digital Twin (MAPF / CBS)
+# Swarm Dispatch
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![SR University](https://img.shields.io/badge/SR%20University-Capstone%202026--2027-0284C7.svg)](https://sru.edu.in)
+A robot-routing puzzle game. You are the dispatcher for a warehouse fleet: draw a
+route for each robot so every one of them reaches its charging bay without two
+robots ever crashing into each other.
 
-> **Capstone Project — School of Computer Science & Artificial Intelligence, SR University, Warangal**  
-> **Candidate**: Seetharam Ravula (2303A52440)  
-> **Teammates**: Sanjay (2303A52337), Sathwik (2303A52158)  
-> **Project Guide**: Dr. Sudha Rani, Assistant Professor  
+Built from an Autonomous Collaborative Robot Swarm project (Conflict-Based
+Search) and refactored into a playable, rules-first puzzle game.
 
----
+## Play
 
-## 🖼️ Academic Research Poster (A1 Conference Format)
-
-![SR University Capstone Research Poster](2303A52440-Seetharam%20Poster.png)
-
-*📄 [Download Print-Ready Vector PDF (A1 Size)](2303A52440-Seetharam%20Poster.pdf)*
-
----
-
-A high-performance, full-spectrum implementation of **Multi-Agent Pathfinding (MAPF)** driven by **Conflict-Based Search (CBS)** and **Space-Time $A^*$ Search**. 
-
-This repository provides both a **Web-Based Digital Twin Platform** and a **Standalone Zero-Dependency Python Desktop Application** for real-time Automated Guided Vehicle (AGV) fleet management and collision avoidance.
-
----
-
-## 🌟 Key Features
-
-* **Conflict-Based Search (CBS) MAPF Solver**: Resolves vertex conflicts $(a_i, a_j, v, t)$ and edge swap conflicts $(a_i, a_j, u, v, t)$ across multi-agent fleets.
-* **Low-Level Space-Time $A^*$ Search**: Calculates optimal trajectories in 3D space-time $(x, y, t)$ obeying dynamic constraints.
-* **Interactive Floor Grid**: Click on any grid cell to place/remove dynamic warehouse shelves; the solver re-routes paths in $<1\,\text{ms}$.
-* **ROS2 / MQTT Telemetry Integration**: Emits real-time JSON telemetry payloads on `/agv_telemetry` topics for hardware integration.
-* **Triple Execution Frontends**:
-  1. **Swarm Dispatch Web App (`Swarm-Dispatch/`)**: Production-grade React 19, TypeScript, and Vite dispatch console and interactive puzzle simulator powered by Conflict-Based Search (CBS) with full Vitest test suite.
-  2. **Web App (`index.html`)**: Dark-mode dashboard built with HTML5 Canvas, TailwindCSS, and Lucide icons.
-  3. **Python App (`robot_swarm_cbs.py`)**: Native Tkinter desktop GUI requiring zero external `pip` dependencies.
-
----
-
-## 📁 Repository Structure
-
-```text
-.
-├── Swarm-Dispatch/                      # Modern React + Vite + TypeScript CBS Dispatch Game & Simulator
-│   ├── src/                             # Application source code & UI components
-│   │   ├── components/                  # SwarmGame, WarehousePreview, and UI library
-│   │   ├── lib/swarm-game.ts            # Conflict-Based Search (CBS) & MAPF engine
-│   │   └── lib/swarm-game.test.ts       # Automated CBS optimality & conflict tests
-│   ├── package.json                     # Node.js dependencies & build scripts
-│   └── README.md                        # Swarm Dispatch gameplay & solver documentation
-├── index.html                           # Web-based Interactive Digital Twin & Swarm Simulator
-├── robot_swarm_cbs.py                   # Python MAPF Engine & Tkinter Desktop Application
-├── 2303A52440-Seetharam Poster.png      # Official A1 Conference Research Poster (PNG)
-├── 2303A52440-Seetharam Poster.pdf      # Official Print-Ready A1 Research Poster (PDF)
-├── 2303A52440-Seetharam PPT.pptx        # 16-Slide Final Presentation Deck
-├── 2303A52440-Seetharam Final Report.docx # Complete Capstone Documentation
-├── 2303A52440-Seetharam Prototype Demo.mp4 # Video Demonstration Recording
-├── BLOG.md                              # 650-Word Original Technical Blog Post
-├── SOCIAL_POSTS.md                      # LinkedIn & Twitter/X Social Announcements
-├── VIDEO_DEMO_SCRIPT.md                 # 8-Minute Video Demonstration Script & Timeline
-├── LINKS.txt                            # Official SRU Submission Links File
-├── figures/                             # High-Resolution Architectural & Benchmark Charts
-└── README.md                            # Technical Documentation & Setup Guide
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Swarm Dispatch Modern Web App (`Swarm-Dispatch/`)
-High-performance interactive puzzle and dispatch dashboard:
-
-```bash
-cd Swarm-Dispatch
-npm install
+```sh
+npm i
 npm run dev
 ```
 
-Run automated CBS unit tests:
-```bash
+Open the printed local address. A How-to-play dialog opens the first time you
+visit, and every level shows a tip.
+
+## Rules
+
+- The grid is a warehouse: `#` is a shelf (impassable), `.` is floor.
+- Each robot has a start cell and a charging bay. Draw a route by clicking or
+  dragging over floor cells, or with the arrow keys.
+- One route step moves a robot one cell. Every robot moves at the same time,
+  one step per tick. A robot that is done waits in its bay.
+- Two robots on the same cell at the same time crash. So do two robots that
+  swap cells head-on in one tick.
+- Every robot must end in its own bay.
+- Score: 3 stars if your total steps beat the level's target, 2 stars if you are
+  within 3 extra steps, 1 star otherwise. Using a hint caps you at 2 stars.
+- The target is the true minimum, computed by the solver, so 3 stars means you
+  matched the best possible plan.
+
+## Levels
+
+1. First Delivery — one robot, learn the controls
+2. Crossroads — two robots meet head-on
+3. Narrow Aisle — one-way passage, timing matters
+4. Rush Hour — three robots, real coordination
+5. Full Swarm — four robots, the whole floor
+
+Stars and unlocked levels are stored in your browser's localStorage under
+`swarm-dispatch-stars`.
+
+## In-game tools
+
+- **Check** validates your routes without dispatching.
+- **Conflict · tick N** warns you before you dispatch, and says which tick crashes.
+- **Hint** reveals a solver-made route for the selected robot.
+- **Pause / Step / Speed** (0.5×, 1×, 2×) while the fleet runs.
+
+## Solver: MAPF with Conflict-Based Search
+
+Multi-Agent Path Finding (MAPF) is the problem: find crash-free routes for all
+robots at once. The game solves it with Conflict-Based Search (CBS).
+
+- **Low level** — space-time A* plans one robot's route while obeying the
+  constraints CBS has given it.
+- **High level** — CBS picks the first conflict (two robots on one cell, or a
+  head-on swap), splits into two children, and adds a constraint keeping one
+  robot out of that cell at that time. It expands the cheapest node first, so
+  the plan it returns is optimal for sum-of-costs.
+- **Fallback** — prioritized planning (robots one at a time) runs only if CBS
+  exceeds its node budget.
+
+CBS supplies both the 3-star targets and the hints.
+
+## Layout
+
+- `src/lib/swarm-game.ts` — game rules and solver as pure functions: levels,
+  movement and crash checks, scoring, and the CBS/MAPF solver.
+- `src/lib/swarm-game.test.ts` — rules and solver tests.
+- `src/components/SwarmGame.tsx` — the game UI; it only renders and calls the
+  rules module.
+- `src/components/WarehousePreview.tsx` — mini warehouse thumbnails on the
+  level cards.
+- `src/styles.css` — the dark warehouse theme and design tokens.
+
+## Tests
+
+```sh
 npm test
 ```
 
-### 2. Web Application (`index.html`)
-Simply open `index.html` in any modern web browser (Google Chrome, Microsoft Edge, Firefox, Safari):
+Covers same-cell crashes, head-on swap crashes, every level being solvable, the
+solver's plan earning 3 stars, hints capping the score, and CBS never doing
+worse than the fallback planner.
 
-```bash
-# Double click index.html or open via browser
-```
+## Built with
 
-### 3. Python Desktop Application (`robot_swarm_cbs.py`)
-Requires Python 3.8+. No external `pip` packages needed!
-
-```bash
-python robot_swarm_cbs.py
-```
-
----
-
-## 🧮 Mathematical Formulation
-
-### Space-Time $A^*$ Cost Function
-$$f(v, t) = g(v, t) + h(v)$$
-
-Where $h(v) = |x_v - x_{\text{goal}}| + |y_v - y_{\text{goal}}|$ is the Manhattan distance heuristic.
-
----
-
-## 📄 License
-MIT License. Free for research, education, and commercial adaptation.
+TanStack Start, TypeScript, React, Tailwind CSS v4, shadcn/ui, Vitest.
