@@ -31,9 +31,10 @@ This repository provides both a **Web-Based Digital Twin Platform** and a **Stan
 * **Low-Level Space-Time $A^*$ Search**: Calculates optimal trajectories in 3D space-time $(x, y, t)$ obeying dynamic constraints.
 * **Interactive Floor Grid**: Click on any grid cell to place/remove dynamic warehouse shelves; the solver re-routes paths in $<1\,\text{ms}$.
 * **ROS2 / MQTT Telemetry Integration**: Emits real-time JSON telemetry payloads on `/agv_telemetry` topics for hardware integration.
-* **Dual Execution Frontends**:
-  1. **Web App (`index.html`)**: Beautiful dark-mode dashboard built with HTML5 Canvas, TailwindCSS, and Lucide icons.
-  2. **Python App (`robot_swarm_cbs.py`)**: Native Tkinter desktop GUI requiring zero external `pip` dependencies.
+* **Triple Execution Frontends**:
+  1. **Swarm Dispatch Web App (`Swarm-Dispatch/`)**: Production-grade React 19, TypeScript, and Vite dispatch console and interactive puzzle simulator powered by Conflict-Based Search (CBS) with full Vitest test suite.
+  2. **Web App (`index.html`)**: Dark-mode dashboard built with HTML5 Canvas, TailwindCSS, and Lucide icons.
+  3. **Python App (`robot_swarm_cbs.py`)**: Native Tkinter desktop GUI requiring zero external `pip` dependencies.
 
 ---
 
@@ -41,12 +42,20 @@ This repository provides both a **Web-Based Digital Twin Platform** and a **Stan
 
 ```text
 .
+├── Swarm-Dispatch/                      # Modern React + Vite + TypeScript CBS Dispatch Game & Simulator
+│   ├── src/                             # Application source code & UI components
+│   │   ├── components/                  # SwarmGame, WarehousePreview, and UI library
+│   │   ├── lib/swarm-game.ts            # Conflict-Based Search (CBS) & MAPF engine
+│   │   └── lib/swarm-game.test.ts       # Automated CBS optimality & conflict tests
+│   ├── package.json                     # Node.js dependencies & build scripts
+│   └── README.md                        # Swarm Dispatch gameplay & solver documentation
 ├── index.html                           # Web-based Interactive Digital Twin & Swarm Simulator
 ├── robot_swarm_cbs.py                   # Python MAPF Engine & Tkinter Desktop Application
 ├── 2303A52440-Seetharam Poster.png      # Official A1 Conference Research Poster (PNG)
 ├── 2303A52440-Seetharam Poster.pdf      # Official Print-Ready A1 Research Poster (PDF)
 ├── 2303A52440-Seetharam PPT.pptx        # 16-Slide Final Presentation Deck
 ├── 2303A52440-Seetharam Final Report.docx # Complete Capstone Documentation
+├── 2303A52440-Seetharam Prototype Demo.mp4 # Video Demonstration Recording
 ├── BLOG.md                              # 650-Word Original Technical Blog Post
 ├── SOCIAL_POSTS.md                      # LinkedIn & Twitter/X Social Announcements
 ├── VIDEO_DEMO_SCRIPT.md                 # 8-Minute Video Demonstration Script & Timeline
@@ -59,14 +68,28 @@ This repository provides both a **Web-Based Digital Twin Platform** and a **Stan
 
 ## 🚀 Quick Start
 
-### 1. Web Application (`index.html`)
+### 1. Swarm Dispatch Modern Web App (`Swarm-Dispatch/`)
+High-performance interactive puzzle and dispatch dashboard:
+
+```bash
+cd Swarm-Dispatch
+npm install
+npm run dev
+```
+
+Run automated CBS unit tests:
+```bash
+npm test
+```
+
+### 2. Web Application (`index.html`)
 Simply open `index.html` in any modern web browser (Google Chrome, Microsoft Edge, Firefox, Safari):
 
 ```bash
 # Double click index.html or open via browser
 ```
 
-### 2. Python Desktop Application (`robot_swarm_cbs.py`)
+### 3. Python Desktop Application (`robot_swarm_cbs.py`)
 Requires Python 3.8+. No external `pip` packages needed!
 
 ```bash
