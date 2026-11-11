@@ -15,6 +15,17 @@
 
 ---
 
+### 🌐 Quick Access & Direct Links
+
+| Access Mode | Direct Link / Command | How to Open |
+| :--- | :--- | :--- |
+| **Local Host 3000** | **[http://localhost:3000](http://localhost:3000)** | Runs locally: `python -m http.server 3000` or `npm run dev` |
+| **Instant Live Web Demo** | **[Launch Browser Simulation](https://htmlpreview.github.io/?https://github.com/2303A52440/capstone-project_3/blob/main/index.html)** | Direct execution in browser (zero setup) |
+| **GitHub Codespaces** | **[Open in GitHub Cloud](https://github.com/codespaces/new?ref=main&repo=2303A52440%2Fcapstone-project_3)** | Runs in GitHub cloud container |
+| **GitHub Pages** | **[https://2303A52440.github.io/capstone-project_3/](https://2303A52440.github.io/capstone-project_3/)** | Official hosted GitHub website |
+
+---
+
 ## 🖼️ Academic Research Poster (ISO A1 Conference Format)
 
 ![SR University Capstone Research Poster](docs/images/2303A52440_Seetharam_Capstone_Poster.png)
@@ -170,11 +181,14 @@ cd capstone-project_3
 # Install dependencies
 npm install
 
-# Start local development server
+# Start local development server on Port 3000
 npm run dev
+
+# OR instant launch directly using Python (Zero dependencies needed):
+python -m http.server 3000
 ```
 
-Open `http://localhost:5173` (or the printed local address) in your browser.
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ### Run Automated CBS Test Suite
 Verify that the CBS algorithm generates crash-free, mathematically optimal plans across all benchmark warehouse maps:
